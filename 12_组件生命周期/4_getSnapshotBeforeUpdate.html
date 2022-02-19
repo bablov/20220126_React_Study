@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3_react生命周期(新)</title>
+    <style>
+        .list{
+            width: 200px;;
+            height: 150px;
+            background-color: aqua;
+            overflow: auto;
+        }
+        .news{
+            height:30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="test"></div>
+
+    <script typt="text/javascript" src="../js/17.0.2/react.development.js"></script>
+    <script typt="text/javascript" src="../js/17.0.2/react-dom.development.js"></script>
+    <script typt="text/javascript" src="../js/17.0.2/babel.min.js"></script>
+
+    <script type="text/babel">
+       class News extends React.Component{
+           state = {newsArr:[]}
+
+           componentDidMount(){
+              setInterval(()=>{
+                  const {newsArr} = this.state;
+                  const newArr = [`新闻${newsArr.length+1}`, ...newsArr];
+                  this.setState({newsArr:newArr})
+              },1000)
+           }
+
+           getSnapshotBeforeUpdate(prevState){
+                return this.refs.list.scrollHeight;
+            }
+
+            //组件更新完毕的钩子
+            componentDidUpdate(prevProps,prevState,height){
+                this.refs.list.scrollTop += this.refs.list.scrollHeight - height;
+            }
+
+           render(){
+               return(
+               <div className="list" ref="list">
+                {
+                        this.state.newsArr.map((item,index) => {
+                            return <div className="news" key={index} className="news">{item}</div>
+                        })
+                }
+               </div>
+               )
+           }               
+       }
+      
+        ReactDOM.render(<News/>,document.getElementById("test"))
+    </script>
+</body>
+</html>
