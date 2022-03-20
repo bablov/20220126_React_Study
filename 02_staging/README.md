@@ -41,4 +41,8 @@
 ## 六、Switch的使用
         1. 通常情况下，path和component是一一对应关系
         2. Switch可以提高路由匹配效率（单一匹配）
+## 七、解决多级路径刷新页面样式丢失问题
+        1. public/index.html 中引入样式时不写 ./ 写 / （常用）
+        2. public/index.html 中引入样式时不写 ./ 写 %PUBLIC_URL% (常用)
+        3. 使用 HashRouter  （不常用）
 
